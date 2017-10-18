@@ -70,8 +70,35 @@
 "use strict";
 
 
-// XMLHttpRequest wrapper using callbacks
-var request = function request(obj) {
+var _request = __webpack_require__(1);
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _request2.default)({ url: "employees.json" }).then(function (data) {
+  var employees = JSON.parse(data);
+  var html = "";
+  employees.forEach(function (employee) {
+    html += "\n        <div>\n          <img src=" + employee.picture + " />\n          <div>\n            " + employee.firstName + " " + employee.lastName + "\n            <p>" + employee.phone + "</p>\n          </div>\n        </div>";
+  });
+  document.getElementById("list").innerHTML = html;
+}).catch(function (error) {
+  console.log(error);
+});
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (obj) {
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open(obj.method || "GET", obj.url);
@@ -93,17 +120,6 @@ var request = function request(obj) {
     xhr.send(obj.body);
   });
 };
-
-request({ url: "employees.json" }).then(function (data) {
-  var employees = JSON.parse(data);
-  var html = "";
-  employees.forEach(function (employee) {
-    html += "\n        <div>\n          <img src=" + employee.picture + " />\n          <div>\n            " + employee.firstName + " " + employee.lastName + "\n            <p>" + employee.phone + "</p>\n          </div>\n        </div>";
-  });
-  document.getElementById("list").innerHTML = html;
-}).catch(function (error) {
-  console.log(error);
-});
 
 /***/ })
 /******/ ]);
