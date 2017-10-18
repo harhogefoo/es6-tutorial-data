@@ -1,10 +1,9 @@
-import request from './request';
+import * as service from "./employee-service"
 
-request({url:"employees.json"})
-  .then(data => {
-    let employees = JSON.parse(data);
+service.findAll()
+  .then(employees => {
     let html = "";
-    employees.forEach((employee) => {
+    employees.forEach(function(employee){
       html += `
         <div>
           <img src=${employee.picture} />
@@ -16,6 +15,4 @@ request({url:"employees.json"})
     });
     document.getElementById("list").innerHTML = html;
   })
-  .catch(error => {
-    console.log(error);
-  });
+  .catch(error => console.log(error));
